@@ -1,0 +1,41 @@
+name: Sync & Validate Assets
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * 1'
+
+jobs:
+  sync-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout design-motion-hub
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Syntax & JSON check
+        run: |
+          node --check scripts/sync-sources.mjs
+          node --check scripts/install-to-hosts.mjs
+          node --check scripts/validate-registry.mjs
+          node --check packages/motion-recipes-kit/assets/shaderbg.js
+          for f in registry/*.json manifests/*.json packages/*/open-design.json adapters/*/open-design.json; do
+            node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$f"
+          done
+
+      - name: Sync external repositories and adapters
+        run: node scripts/sync-sources.mjs
+
+      - name: Validate all packages, adapters, and manifests
+        run: node scripts/validate-registry.mjs
+
+      - name: Dry-run host installation
+        run: node scripts/install-to-hosts.mjs --dry-run
