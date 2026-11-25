@@ -13,6 +13,18 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REGISTRY_PATH = path.join(ROOT, 'registry', 'sources.json');
 const SYNC_ROOT = path.join(ROOT, 'synced');
+const DESIGN_MAX_BYTES = 200 * 1024;
+
+const OPENMOTION_SCENARIO_BY_ID = {
+  'motion-recipes-kit': 'webgl',
+  'motion-spec-craft': 'prototype',
+  'svg-animations-kit': 'prototype',
+  'lieflat-charts': 'live-artifact',
+  'paper-shaders': 'webgl',
+  'lanshu-animated-architecture-diagram': 'document',
+  img2threejs: 'webgl',
+  'text-to-lottie': 'prototype',
+};
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
@@ -63,7 +75,7 @@ function replaceSymlink(src, dest) {
   symlinkSync(src, dest);
 }
 
-function copyDirClean(src, dest) {
+function copyDirClean(src, dest, maxBytes = Infinity) {
   if (dryRun) {
     console.log(`  [dry-run] copy ${src} -> ${dest}`);
     return;
@@ -72,11 +84,27 @@ function copyDirClean(src, dest) {
   rmSync(dest, { recursive: true, force: true });
   cpSync(src, dest, {
     recursive: true,
-    filter: (p) => path.basename(p) !== '.git',
+    filter: (p) => {
+      if (path.basename(p) === '.git') return false;
+      if (Number.isFinite(maxBytes)) {
+        const st = lstatSync(p);
+        if (st.isFile() && st.size > maxBytes) return false;
+      }
+      return true;
+    },
   });
 }
 
 function registerInOpenMotionCatalog(omRoot, item, srcDir) {
+  const libSkillsDir = path.join(omRoot, 'library', 'skills');
+  if (existsSync(libSkillsDir)) {
+    const destLibSkillDir = path.join(libSkillsDir, item.id);
+    copyDirClean(srcDir, destLibSkillDir);
+    if (!dryRun) {
+      console.log(`  [openmotion] synced library/skills -> ${destLibSkillDir}`);
+    }
+  }
+
   const designSkillsRoot = path.join(omRoot, 'library', 'design', 'skills');
   const catalogFile = path.join(designSkillsRoot, 'catalog.json');
   if (!existsSync(catalogFile)) {
@@ -84,7 +112,7 @@ function registerInOpenMotionCatalog(omRoot, item, srcDir) {
     return;
   }
   const destSkillDir = path.join(designSkillsRoot, item.id);
-  copyDirClean(srcDir, destSkillDir);
+  copyDirClean(srcDir, destSkillDir, DESIGN_MAX_BYTES);
   if (dryRun) {
     console.log(`  [dry-run] update OpenMotion catalog.json entry for ${item.id}`);
     return;
@@ -94,7 +122,7 @@ function registerInOpenMotionCatalog(omRoot, item, srcDir) {
     id: item.id,
     title: item.id.replace(/(^|-)([a-z])/g, (_, p, c) => (p ? ' ' : '') + c.toUpperCase()),
     description: item.description || `${item.id} skill`,
-    scenario: 'prototype',
+    scenario: OPENMOTION_SCENARIO_BY_ID[item.id] || 'prototype',
     category: 'animation-motion',
     examplePrompt: null,
   };
