@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>News Documentary Video · 实战案例与 6 幕新闻纪实流水线</title>
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --paper: #f3ead7;
+      --ink: #1b1814;
+      --card: #141820;
+      --border: rgba(255, 255, 255, 0.1);
+      --muted: #9aa3b2;
+      --text: #eef2f6;
+      --red: #c9342b;
+      --amber: #e9b949;
+      --green: #22c55e;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 28px;
+      font-family: var(--sans);
+      background: radial-gradient(circle at 18% 0%, #1d1815 0%, var(--bg) 52%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; }
+    .top {
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;
+      align-items: flex-end; padding-bottom: 18px; border-bottom: 1px solid var(--border);
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 10px; border-radius: 999px; font: 600 12px/1.2 var(--mono);
+      background: rgba(201, 52, 43, 0.16); color: #ff8e86; border: 1px solid rgba(201, 52, 43, 0.35);
+    }
+    .badge-nc {
+      background: rgba(233, 185, 73, 0.14); color: var(--amber); border-color: rgba(233, 185, 73, 0.35);
+    }
+    h1 { margin: 10px 0 6px; font-size: 28px; letter-spacing: -0.02em; }
+    .sub { margin: 0; color: var(--muted); font-size: 14px; max-width: 720px; }
+    .tc { font-family: var(--mono); font-size: 12px; color: var(--muted); text-align: right; }
+    .tc strong { display: block; color: var(--text); font-size: 14px; }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px; margin-top: 22px;
+    }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+    .shot {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .stage {
+      position: relative; aspect-ratio: 16 / 9; overflow: hidden;
+      padding: 18px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .s1 {
+      background: linear-gradient(135deg, #efe2c6 0%, #dccaa4 100%);
+      color: var(--ink);
+    }
+    .s1 .mast {
+      display: flex; justify-content: space-between; font: 700 10px/1 var(--mono);
+      border-bottom: 2px solid var(--ink); padding-bottom: 6px; letter-spacing: 0.08em;
+    }
+    .s1 .hl {
+      font-size: 22px; font-weight: 900; line-height: 1.22; letter-spacing: -0.02em;
+    }
+    .s1 mark { background: rgba(246, 208, 70, 0.85); color: var(--ink); padding: 0 4px; }
+
+    .s2 {
+      background: radial-gradient(circle at 50% 45%, #3d2c20 0%, #1d1510 100%);
+    }
+    .cutout {
+      background: var(--paper); color: var(--ink); padding: 14px 16px;
+      border-radius: 4px; transform: rotate(-1.6deg);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+      max-width: 86%;
+    }
+    .stamp {
+      position: absolute; right: 20px; bottom: 20px;
+      border: 3px solid var(--red); color: var(--red);
+      padding: 4px 12px; font: 800 13px/1 var(--mono);
+      transform: rotate(-10deg); background: rgba(201, 52, 43, 0.08);
+    }
+
+    .s3 {
+      background: linear-gradient(180deg, #0c1219 0%, #090d12 100%);
+    }
+    .s3 svg { width: 100%; height: 100%; }
+
+    .s4 {
+      background: linear-gradient(135deg, #171a21 0%, #0b0d11 100%);
+    }
+    .quote-row { display: grid; grid-template-columns: 76px 1fr; gap: 14px; align-items: center; margin-top: 8px; }
+    .avatar {
+      width: 76px; height: 76px; border-radius: 10px;
+      background: linear-gradient(135deg, #2b3545, #18202c);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: grid; place-items: center; font: 700 20px var(--mono); color: #cbd5e1;
+    }
+    .qbox {
+      background: rgba(243, 234, 215, 0.96); color: var(--ink);
+      padding: 12px 14px; border-left: 4px solid var(--red); border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .shot-meta { padding: 14px 16px; border-top: 1px solid var(--border); }
+    .shot-meta h3 { margin: 0 0 4px; font-size: 15px; }
+    .shot-meta p { margin: 0; font-size: 13px; color: var(--muted); }
+
+    .acts {
+      margin-top: 22px; background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px 18px;
+    }
+    .acts h2 { margin: 0 0 10px; font-size: 15px; }
+    .act-list {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;
+      font-size: 12px; color: var(--muted);
+    }
+    @media (max-width: 760px) { .act-list { grid-template-columns: 1fr; } }
+    .act-item {
+      padding: 10px 12px; border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .act-item b { display: block; color: var(--text); margin-bottom: 3px; font-family: var(--mono); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div>
+        <span class="badge">6-ACT IN MEDIAS RES · 1080P 30FPS</span>
+        <span class="badge badge-nc">CC BY-NC-SA 4.0</span>
+        <h1>《黄仁勋的归来》新闻纪实案例预览</h1>
+        <p class="sub">根据单一新闻选题自动串联「联网事实核查 → 6 幕倒叙分镜 → Wikimedia 肖像与 Incompetech 配乐采集 → VAD 语音混音 → 视听 QA 抽帧门禁」。</p>
+      </div>
+      <div class="tc">
+        <strong>SerenaMugua/news-documentary-video-skill</strong>
+        <span>TC 00:00:00:00 – 00:01:00:00</span>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="shot">
+        <div class="stage s1">
+          <div class="mast"><span>BREAKING ARCHIVE · EDITION NO.01</span><span>NOV 2026</span></div>
+          <div class="hl">突发快讯：<mark>全票回归</mark> 与 11 天权斗时间线全景还原</div>
+          <div style="font: 600 11px/1.2 var(--mono); opacity: 0.72;">TYPEWRITER LEAD + MARKER HIGHLIGHT · B-ROLL PUSH-IN</div>
+        </div>
+        <div class="shot-meta">
+          <h3>01 复古旧报纸打字开场 + 荧光笔划重点</h3>
+          <p>对应上游案例 <code>preview/01_newspaper_open.png</code>：打字机快讯、荧光高亮对位与高潮悬念定调。</p>
+        </div>
+      </article>
+
+      <article class="shot">
+        <div class="stage s2">
+          <div class="cutout">
+            <div style="font: 700 10px var(--mono); color: #6b5d4d;">TORN CLIPPING #02 · EVIDENCE BOARD</div>
+            <div style="font-size: 16px; font-weight: 800; margin-top: 4px;">匿名信源争议 vs 董事会官方联合声明</div>
+          </div>
+          <div class="stamp">CONFIRMED REVERSAL</div>
+          <div style="font: 600 11px/1.2 var(--mono); color: #d6c5b0;">RED STRING PIN + STAMP SHAKE</div>
+        </div>
+        <div class="shot-meta">
+          <h3>02 软木调查板 + 手撕剪纸 + 红章微震</h3>
+          <p>对应上游案例 <code>preview/02_scandal_cutout.png</code>：红线串联冲突节点、<code>textbbox</code> 高光与红章落地。</p>
+        </div>
+      </article>
+
+      <article class="shot">
+        <div class="stage s3">
+          <svg viewBox="0 0 480 230" fill="none" aria-label="Deep V market curve">
+            <defs>
+              <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#22c55e" stop-opacity="0.32" />
+                <stop offset="100%" stop-color="#22c55e" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <g stroke="rgba(255,255,255,0.08)" stroke-width="1">
+              <line x1="24" y1="50" x2="456" y2="50" />
+              <line x1="24" y1="115" x2="456" y2="115" />
+              <line x1="24" y1="180" x2="456" y2="180" />
+            </g>
+            <path d="M 32 76 L 130 92 L 228 192 L 330 120 L 444 48 L 444 210 L 32 210 Z" fill="url(#areaGrad)" />
+            <path d="M 32 76 L 130 92 L 228 192" stroke="#ef4444" stroke-width="4" stroke-linecap="round" />
+            <path d="M 228 192 L 330 120 L 444 48" stroke="#22c55e" stroke-width="4" stroke-linecap="round" />
+            <circle cx="228" cy="192" r="6" fill="#ef4444" />
+            <circle cx="444" cy="48" r="6" fill="#22c55e" />
+            <text x="24" y="28" fill="#9aa3b2" font-family="monospace" font-size="12">MARKET SHOCKWAVE · CLOSE DATA</text>
+          </svg>
+        </div>
+        <div class="shot-meta">
+          <h3>03 真实收盘价万亿深 V 动态图表</h3>
+          <p>对应上游案例 <code>preview/03_stock_surge.png</code>：红绿发光动态行情线与连续数据勋章弹出。</p>
+        </div>
+      </article>
+
+      <article class="shot">
+        <div class="stage s4">
+          <div style="font: 600 11px var(--mono); color: #9aa3b2;">A-ROLL PORTRAIT CUT + QUOTE CLIPPING</div>
+          <div class="quote-row">
+            <div class="avatar">A-ROLL</div>
+            <div class="qbox">
+              <b>多方关键人物公开引语对照</b><br />
+              自动标注「官方实名证实 / 匿名报道 / 未证实清单」，配同步字幕与顶部章节条。
+            </div>
+          </div>
+          <div style="font: 600 11px var(--mono); color: #9aa3b2;">TICKER: NEWSSTING + THE COMPLEX · RMS -22 dB PASS</div>
+        </div>
+        <div class="shot-meta">
+          <h3>04 政商关键人物 A-roll 快切 + 引语卡</h3>
+          <p>对应上游案例 <code>preview/04_aroll_quote.png</code>：Wikimedia 肖像采集、VAD 防漏字混音与零缺字检查。</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="acts">
+      <h2>完整 6 幕工作流 &amp; 内置脚本能力</h2>
+      <div class="act-list">
+        <div class="act-item"><b>01–02 开场与倒带起点</b>旧报纸打字快讯 + VHS 倒带转场 + 软木板剪纸 #1</div>
+        <div class="act-item"><b>03–04 争议反转与行情</b>红线连线 + 红章微震 + 动态市场/科普数据曲线</div>
+        <div class="act-item"><b>05–06 众生相与结语 QA</b>Wikimedia 肖像 + VAD 混音（RMS -26~-18 dB）+ 抽帧复核</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

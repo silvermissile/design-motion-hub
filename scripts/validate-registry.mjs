@@ -84,6 +84,10 @@ function main() {
         if (entry && !existsSync(path.resolve(dir, entry))) {
           errors.push(`${item.id}: preview entry missing: ${entry}`);
         }
+        const poster = m.od?.preview?.poster;
+        if (poster && !/^(?:https?:)?\//.test(poster) && !existsSync(path.resolve(dir, poster))) {
+          errors.push(`${item.id}: preview poster missing: ${poster}`);
+        }
       } catch (err) {
         errors.push(`${item.id}: invalid open-design.json (${err.message})`);
       }

@@ -24,10 +24,28 @@
   "od": {
     "kind": "skill",
     "taskKind": "new-generation",
-    "mode": "prototype",
-    "scenario": "product",
+    "mode": "video",
+    "scenario": "video",
+    "preview": {
+      "type": "html",
+      "entry": "./showcase.html",
+      "poster": "./preview/01_newspaper_open.png",
+      "motion": "static"
+    },
     "useCase": {
-      "query": "Produce a news-documentary style explainer or visual brief for {{topic}}."
+      "query": "Produce a 6-act news-documentary style code video with vintage newspaper cutouts, data charts, and audio/visual QA for {{topic}}.",
+      "exampleOutputs": [
+        { "path": "./showcase.html", "title": "News Documentary 4-Act Case Showcase" }
+      ]
+    },
+    "context": {
+      "assets": [
+        "./showcase.html",
+        "./preview/01_newspaper_open.png",
+        "./preview/02_scandal_cutout.png",
+        "./preview/03_stock_surge.png",
+        "./preview/04_aroll_quote.png"
+      ]
     },
     "inputs": [
       { "name": "topic", "type": "string", "required": true }

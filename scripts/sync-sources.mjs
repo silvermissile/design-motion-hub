@@ -44,14 +44,18 @@ function runGit(cwd, gitArgs) {
   execFileSync('git', cwd ? ['-C', cwd, ...gitArgs] : gitArgs, { stdio: 'inherit' });
 }
 
-function syncGithubRepo(spec, destDir, ref, updateMode) {
+function syncGithubRepo(spec, destDir, ref, updateMode, extraPaths = []) {
   const parsed = parseGithubSource(spec, ref || 'main');
   const gitDir = path.join(destDir, '.git');
+  const sparsePaths = parsed.subpath ? [parsed.subpath, ...extraPaths] : [];
 
   if (existsSync(gitDir)) {
     if (updateMode === 'pinned') {
       console.log(`  [skip] pinned at ${destDir}`);
       return parsed;
+    }
+    if (sparsePaths.length > 0) {
+      runGit(destDir, ['sparse-checkout', 'set', ...sparsePaths]);
     }
     console.log(`  [update] fetching ${parsed.url} (${parsed.ref})`);
     runGit(destDir, ['fetch', '--depth', '1', 'origin', parsed.ref]);
@@ -62,9 +66,9 @@ function syncGithubRepo(spec, destDir, ref, updateMode) {
   console.log(`  [clone] ${parsed.url} (${parsed.ref}) -> ${destDir}`);
   if (!dryRun) mkdirSync(path.dirname(destDir), { recursive: true });
 
-  if (parsed.subpath) {
+  if (sparsePaths.length > 0) {
     runGit(null, ['clone', '--depth', '1', '--filter=blob:none', '--sparse', '--branch', parsed.ref, parsed.url, destDir]);
-    runGit(destDir, ['sparse-checkout', 'set', parsed.subpath]);
+    runGit(destDir, ['sparse-checkout', 'set', ...sparsePaths]);
   } else {
     runGit(null, ['clone', '--depth', '1', '--branch', parsed.ref, parsed.url, destDir]);
   }
@@ -90,9 +94,21 @@ function main() {
 
     if (item.kind === 'external-repo' && item.source.startsWith('github:')) {
       const dest = path.join(SYNC_ROOT, item.id);
-      const parsed = syncGithubRepo(item.source, dest, item.ref, item.update || 'latest');
+      const extraPaths = Array.isArray(item.extraPaths) ? item.extraPaths : [];
+      const parsed = syncGithubRepo(item.source, dest, item.ref, item.update || 'latest', extraPaths);
+      const pkgRoot = parsed.subpath ? path.join(dest, parsed.subpath) : dest;
+      for (const extraRel of extraPaths) {
+        const srcExtra = path.join(dest, extraRel);
+        const dstExtra = path.join(pkgRoot, extraRel);
+        console.log(`  [extra] ${srcExtra} -> ${dstExtra}`);
+        if (!dryRun && existsSync(srcExtra)) cpSync(srcExtra, dstExtra, { recursive: true });
+      }
+      if (item.overlayDir) {
+        const srcOverlay = path.resolve(ROOT, item.overlayDir);
+        console.log(`  [overlay] ${srcOverlay} -> ${pkgRoot}`);
+        if (!dryRun && existsSync(srcOverlay)) cpSync(srcOverlay, pkgRoot, { recursive: true });
+      }
       if (item.manifestOverride) {
-        const pkgRoot = parsed.subpath ? path.join(dest, parsed.subpath) : dest;
         const srcManifest = path.resolve(ROOT, item.manifestOverride);
         const dstManifest = path.join(pkgRoot, 'open-design.json');
         console.log(`  [manifest] ${srcManifest} -> ${dstManifest}`);

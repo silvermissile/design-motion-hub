@@ -74,6 +74,8 @@
       "id": "news-documentary-video",
       "kind": "external-repo",
       "source": "github:SerenaMugua/news-documentary-video-skill@main/skills/news-documentary-video",
+      "extraPaths": ["preview"],
+      "overlayDir": "./manifests/overlays/news-documentary-video",
       "update": "latest",
       "manifestOverride": "./manifests/news-documentary-video.json",
       "targets": ["opendesign-plugin", "agent-skill"],
