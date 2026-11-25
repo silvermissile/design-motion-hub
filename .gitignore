@@ -1,0 +1,4 @@
+node_modules/
+synced/
+.DS_Store
+*.tgz

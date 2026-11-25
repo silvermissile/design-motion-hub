@@ -1,0 +1,48 @@
+{
+  "$schema": "https://open-design.ai/schemas/plugin.v1.json",
+  "specVersion": "1.0.0",
+  "name": "motion-recipes-kit",
+  "title": "Motion Recipes Kit",
+  "title_i18n": {
+    "zh-CN": "零依赖动效与着色器组件库"
+  },
+  "version": "0.1.0",
+  "description": "84 dependency-free WebGL shaders, Canvas 2D fields, kinetic typography, and UI micro-interactions extracted from motion-anything, with dual-clock HyperFrames support.",
+  "description_i18n": {
+    "zh-CN": "精选自 motion-anything 的 84 个零依赖 WebGL 着色器、Canvas 2D、文字与交互动效配方，支持网页实时运行与 OpenMotion HyperFrames 时钟同步。",
+    "en": "84 dependency-free WebGL shaders, Canvas 2D fields, kinetic typography, and UI micro-interactions with HyperFrames clock support."
+  },
+  "author": {
+    "name": "water",
+    "url": "https://github.com/nexu-io/motion-anything"
+  },
+  "license": "Apache-2.0",
+  "tags": ["motion", "shader", "webgl", "canvas", "animation", "html", "hyperframes"],
+  "compat": {
+    "agentSkills": [{ "path": "./SKILL.md" }]
+  },
+  "od": {
+    "kind": "skill",
+    "taskKind": "new-generation",
+    "mode": "prototype",
+    "scenario": "product",
+    "useCase": {
+      "query": "Apply tasteful, dependency-free motion or WebGL shader effects to {{target}}.",
+      "exampleOutputs": [
+        { "path": "./examples/showcase.html", "title": "Motion Recipes Kit Showcase" }
+      ]
+    },
+    "preview": {
+      "type": "html",
+      "entry": "./examples/showcase.html",
+      "motion": "static"
+    },
+    "context": {
+      "assets": ["./examples/showcase.html"]
+    },
+    "inputs": [
+      { "name": "target", "type": "string", "required": true }
+    ],
+    "capabilities": ["prompt:inject", "fs:write"]
+  }
+}

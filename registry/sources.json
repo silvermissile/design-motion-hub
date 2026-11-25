@@ -1,0 +1,41 @@
+{
+  "$schema": "./sources.schema.json",
+  "version": 1,
+  "items": [
+    {
+      "id": "motion-recipes-kit",
+      "kind": "local-package",
+      "source": "local:./packages/motion-recipes-kit",
+      "update": "local",
+      "targets": ["opendesign-plugin", "agent-skill"],
+      "description": "84 个零依赖 WebGL Shader / Canvas / 文字 / 交互动效配方与双模时钟 shaderbg.js（抽取自 motion-anything）"
+    },
+    {
+      "id": "motion-spec-craft",
+      "kind": "local-package",
+      "source": "local:./packages/motion-spec-craft",
+      "update": "local",
+      "targets": ["opendesign-plugin", "agent-skill"],
+      "description": "MOTION-SPEC 定量动效预算门禁（时长/缓动 Token、每屏并发上限、avoid_when 与无障碍降级）"
+    }
+  ],
+  "planned_phase2_examples": [
+    {
+      "id": "lieflat-charts",
+      "kind": "external-repo",
+      "source": "github:silvermissile/lieflat-charts",
+      "ref": "main",
+      "update": "latest",
+      "targets": ["opendesign-plugin", "agent-skill"],
+      "manifestOverride": "./manifests/lieflat-charts.json"
+    },
+    {
+      "id": "paper-shaders-adapter",
+      "kind": "adapter",
+      "source": "local:./adapters/paper-shaders",
+      "upstream": "github:paper-design/shaders@main/packages/shaders/src/shaders",
+      "update": "latest",
+      "targets": ["opendesign-plugin", "agent-skill"]
+    }
+  ]
+}

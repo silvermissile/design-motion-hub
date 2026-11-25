@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Motion Spec Craft — Quantitative Tokens & Budget</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --card: #141821;
+      --border: rgba(255,255,255,0.1);
+      --text: #f3f5f8;
+      --muted: #98a2b3;
+      --accent: #7c5cff;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 40px 24px; }
+    .wrap { max-width: 920px; margin: 0 auto; }
+    h1 { font-size: 28px; margin: 0 0 8px; }
+    p { color: var(--muted); margin: 0 0 28px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+    .token { font-family: ui-monospace, SFMono-Regular, monospace; color: #b7a6ff; font-size: 13px; }
+    .track { height: 10px; background: rgba(255,255,255,0.08); border-radius: 999px; margin: 14px 0 8px; position: relative; overflow: hidden; }
+    .bar { height: 100%; width: 28%; background: var(--accent); border-radius: 999px; transform: translateX(0); transition: transform 280ms var(--ease-out); }
+    .card:hover .bar { transform: translateX(255%); }
+    .card[data-dur="instant"]:hover .bar { transition-duration: 100ms; }
+    .card[data-dur="fast"]:hover .bar { transition-duration: 180ms; }
+    .card[data-dur="base"]:hover .bar { transition-duration: 280ms; }
+    .card[data-dur="slow"]:hover .bar { transition-duration: 420ms; }
+    .card[data-dur="deliberate"]:hover .bar { transition-duration: 650ms; }
+    .card[data-dur="cinematic"]:hover .bar { transition-duration: 1200ms; transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+    @media (prefers-reduced-motion: reduce) {
+      .bar { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>MOTION-SPEC Quantitative Tokens</h1>
+    <p>Hover any card to compare duration tokens (<code>transform</code>-only, GPU-safe, reduced-motion aware).</p>
+    <div class="grid">
+      <div class="card" data-dur="instant"><div class="token">instant · 100ms</div><div class="track"><div class="bar"></div></div><small>Hover / press feedback</small></div>
+      <div class="card" data-dur="fast"><div class="token">fast · 180ms</div><div class="track"><div class="bar"></div></div><small>Micro-interactions, toggles</small></div>
+      <div class="card" data-dur="base"><div class="token">base · 280ms</div><div class="track"><div class="bar"></div></div><small>Standard card entrances</small></div>
+      <div class="card" data-dur="slow"><div class="token">slow · 420ms</div><div class="track"><div class="bar"></div></div><small>Section / page transitions</small></div>
+      <div class="card" data-dur="deliberate"><div class="token">deliberate · 650ms</div><div class="track"><div class="bar"></div></div><small>Hero / user-triggered delight</small></div>
+      <div class="card" data-dur="cinematic"><div class="token">cinematic · 1200ms</div><div class="track"><div class="bar"></div></div><small>Video transitions only</small></div>
+    </div>
+  </div>
+</body>
+</html>
