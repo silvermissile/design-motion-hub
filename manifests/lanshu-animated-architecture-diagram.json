@@ -1,0 +1,37 @@
+{
+  "$schema": "https://open-design.ai/schemas/plugin.v1.json",
+  "specVersion": "1.0.0",
+  "name": "lanshu-animated-architecture-diagram",
+  "title": "Lanshu Animated Architecture Diagram",
+  "title_i18n": {
+    "zh-CN": "岚叔动态架构图"
+  },
+  "version": "1.0.0",
+  "description": "Turn structured architecture JSON specs into editable Excalidraw files, crisp PNG diagrams, and animated light-flow GIFs.",
+  "description_i18n": {
+    "zh-CN": "将结构化架构 JSON 转为可编辑 Excalidraw、高清 PNG 与流动光点动画 GIF 三件套。"
+  },
+  "author": {
+    "name": "cclank",
+    "url": "https://github.com/cclank/lanshu-animated-architecture-diagram"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/cclank/lanshu-animated-architecture-diagram",
+  "tags": ["diagram", "architecture", "excalidraw", "gif", "animation"],
+  "compat": {
+    "agentSkills": [{ "path": "./SKILL.md" }]
+  },
+  "od": {
+    "kind": "skill",
+    "taskKind": "new-generation",
+    "mode": "prototype",
+    "scenario": "product",
+    "useCase": {
+      "query": "Generate an animated architecture diagram for {{system}}."
+    },
+    "inputs": [
+      { "name": "system", "type": "string", "required": true }
+    ],
+    "capabilities": ["prompt:inject", "fs:write"]
+  }
+}

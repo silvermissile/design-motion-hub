@@ -1,0 +1,37 @@
+{
+  "$schema": "https://open-design.ai/schemas/plugin.v1.json",
+  "specVersion": "1.0.0",
+  "name": "text-to-lottie",
+  "title": "Text to Lottie",
+  "title_i18n": {
+    "zh-CN": "文本生成 Lottie 矢量动画"
+  },
+  "version": "1.0.0",
+  "description": "Create, edit, or fix Lottie/Bodymovin JSON animations for UI microinteractions, loaders, logos, lower thirds, diagrams, and charts.",
+  "description_i18n": {
+    "zh-CN": "生成与编辑 Lottie/Bodymovin JSON 矢量动效，覆盖 Logo、加载动画、下三分之一字幕条、图表与交互微动效。"
+  },
+  "author": {
+    "name": "diffusionstudio",
+    "url": "https://github.com/diffusionstudio/lottie"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/diffusionstudio/lottie",
+  "tags": ["lottie", "bodymovin", "vector", "animation", "svg", "json"],
+  "compat": {
+    "agentSkills": [{ "path": "./SKILL.md" }]
+  },
+  "od": {
+    "kind": "skill",
+    "taskKind": "new-generation",
+    "mode": "prototype",
+    "scenario": "product",
+    "useCase": {
+      "query": "Generate a Lottie JSON animation for {{subject}}."
+    },
+    "inputs": [
+      { "name": "subject", "type": "string", "required": true }
+    ],
+    "capabilities": ["prompt:inject", "fs:write"]
+  }
+}

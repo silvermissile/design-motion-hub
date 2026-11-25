@@ -1,4 +1,5 @@
 node_modules/
 synced/
+adapters/*/upstream/
 .DS_Store
 *.tgz

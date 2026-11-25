@@ -1,6 +1,6 @@
 {
   "$schema": "./sources.schema.json",
-  "version": 1,
+  "version": 2,
   "items": [
     {
       "id": "motion-recipes-kit",
@@ -17,25 +17,58 @@
       "update": "local",
       "targets": ["opendesign-plugin", "agent-skill"],
       "description": "MOTION-SPEC 定量动效预算门禁（时长/缓动 Token、每屏并发上限、avoid_when 与无障碍降级）"
-    }
-  ],
-  "planned_phase2_examples": [
+    },
+    {
+      "id": "svg-animations-kit",
+      "kind": "local-package",
+      "source": "local:./packages/svg-animations-kit",
+      "update": "local",
+      "targets": ["opendesign-plugin", "agent-skill"],
+      "description": "SVG SMIL/CSS 矢量动画指南（描边绘制、形变、路径运动、滤镜与无障碍降级）"
+    },
     {
       "id": "lieflat-charts",
       "kind": "external-repo",
-      "source": "github:silvermissile/lieflat-charts",
-      "ref": "main",
+      "source": "github:silvermissile/lieflat-charts@main",
       "update": "latest",
       "targets": ["opendesign-plugin", "agent-skill"],
-      "manifestOverride": "./manifests/lieflat-charts.json"
+      "description": "模板驱动数据可视化与整页报告（63 张图表 + 12 套报告模板）"
     },
     {
-      "id": "paper-shaders-adapter",
+      "id": "paper-shaders",
       "kind": "adapter",
       "source": "local:./adapters/paper-shaders",
-      "upstream": "github:paper-design/shaders@main/packages/shaders/src/shaders",
+      "upstream": "github:paper-design/shaders@main/packages/shaders/src",
       "update": "latest",
-      "targets": ["opendesign-plugin", "agent-skill"]
+      "targets": ["opendesign-plugin", "agent-skill"],
+      "description": "Paper Design 30 个零依赖 WebGL2 GLSL ES 3.0 着色器外挂适配器"
+    },
+    {
+      "id": "lanshu-animated-architecture-diagram",
+      "kind": "external-repo",
+      "source": "github:cclank/lanshu-animated-architecture-diagram@main",
+      "update": "latest",
+      "manifestOverride": "./manifests/lanshu-animated-architecture-diagram.json",
+      "targets": ["opendesign-plugin", "agent-skill"],
+      "description": "结构化 JSON Spec 生成可编辑 Excalidraw + PNG + 动态光点流动 GIF"
+    },
+    {
+      "id": "img2threejs",
+      "kind": "external-repo",
+      "source": "github:img2threejs/img2threejs@main",
+      "update": "latest",
+      "manifestOverride": "./manifests/img2threejs.json",
+      "targets": ["opendesign-plugin", "agent-skill"],
+      "description": "参考图 8 阶段质量门控重建程序化 Three.js 3D 模型"
+    },
+    {
+      "id": "text-to-lottie",
+      "kind": "external-repo",
+      "source": "github:diffusionstudio/lottie@main/skills/text-to-lottie",
+      "update": "latest",
+      "manifestOverride": "./manifests/text-to-lottie.json",
+      "targets": ["opendesign-plugin", "agent-skill"],
+      "description": "文本/SVG 生成与修复 Lottie/Bodymovin JSON 矢量动画"
     }
   ]
 }

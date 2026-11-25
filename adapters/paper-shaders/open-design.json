@@ -1,0 +1,46 @@
+{
+  "$schema": "https://open-design.ai/schemas/plugin.v1.json",
+  "specVersion": "1.0.0",
+  "name": "paper-shaders",
+  "title": "Paper Shaders Adapter",
+  "title_i18n": {
+    "zh-CN": "Paper Shaders WebGL2 着色器集"
+  },
+  "version": "0.1.0",
+  "description": "Adapter sidecar for paper-design/shaders (30 zero-dependency WebGL2 GLSL ES 3.0 shaders with deterministic setFrame(ms) rendering).",
+  "description_i18n": {
+    "zh-CN": "Paper Design 30 个零依赖 WebGL2 GLSL ES 3.0 着色器外挂适配器，支持确定性帧时间跳转与 HyperFrames 渲染。",
+    "en": "Adapter sidecar for paper-design/shaders (30 WebGL2 shaders with deterministic setFrame(ms) rendering)."
+  },
+  "author": {
+    "name": "water",
+    "url": "https://github.com/paper-design/shaders"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/paper-design/shaders",
+  "tags": ["shader", "webgl2", "glsl", "background", "hyperframes", "paper-design"],
+  "compat": {
+    "agentSkills": [{ "path": "./SKILL.md" }]
+  },
+  "od": {
+    "kind": "skill",
+    "taskKind": "new-generation",
+    "mode": "prototype",
+    "scenario": "product",
+    "useCase": {
+      "query": "Apply a Paper Shaders WebGL2 backdrop for {{target}}."
+    },
+    "preview": {
+      "type": "html",
+      "entry": "./examples/showcase.html",
+      "motion": "static"
+    },
+    "context": {
+      "assets": ["./examples/showcase.html"]
+    },
+    "inputs": [
+      { "name": "target", "type": "string", "required": true }
+    ],
+    "capabilities": ["prompt:inject", "fs:write"]
+  }
+}

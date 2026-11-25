@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paper Shaders Adapter — Showcase</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; background: #0a0b10; color: #f8fafc; min-height: 100vh; display: grid; place-items: center; padding: 32px; }
+    .panel { max-width: 720px; padding: 36px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.12); background: radial-gradient(120% 120% at 15% 15%, rgba(124,92,255,0.28), rgba(14,17,28,0.92)); }
+    h1 { margin: 0 0 12px; font-size: 28px; }
+    p { color: #cbd5e1; line-height: 1.6; margin: 0 0 16px; }
+    code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 6px; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>Paper Shaders Adapter (30 WebGL2 Shaders)</h1>
+    <p>Sync upstream GLSL sources via <code>node scripts/sync-sources.mjs --only paper-shaders</code>, then drive <code>ShaderMount.setFrame(t * 1000)</code> for deterministic HTML &amp; OpenMotion HyperFrames rendering.</p>
+    <p>Highlights: <code>mesh-gradient</code> · <code>neuro-noise</code> · <code>fluted-glass</code> · <code>liquid-metal</code> · <code>god-rays</code> · <code>dithering</code></p>
+  </div>
+</body>
+</html>

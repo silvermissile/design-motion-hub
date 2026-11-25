@@ -1,0 +1,35 @@
+{
+  "$schema": "https://open-design.ai/schemas/plugin.v1.json",
+  "specVersion": "1.0.0",
+  "name": "svg-animations-kit",
+  "title": "SVG Animations Kit",
+  "title_i18n": {
+    "zh-CN": "SVG 矢量与路径动效指南"
+  },
+  "version": "0.1.0",
+  "description": "Handcrafted SVG SMIL/CSS animations, stroke path drawing, shape morphing, motion paths, gradients, masks, and reduced-motion accessibility.",
+  "description_i18n": {
+    "zh-CN": "SVG SMIL 与 CSS 矢量动画指南，涵盖描边绘制、形状变形、路径运动、滤镜遮罩与无障碍降级。"
+  },
+  "author": {
+    "name": "water"
+  },
+  "license": "Apache-2.0",
+  "tags": ["svg", "smil", "vector", "animation", "path", "icon"],
+  "compat": {
+    "agentSkills": [{ "path": "./SKILL.md" }]
+  },
+  "od": {
+    "kind": "skill",
+    "taskKind": "new-generation",
+    "mode": "prototype",
+    "scenario": "product",
+    "useCase": {
+      "query": "Create a resolution-independent animated SVG for {{subject}}."
+    },
+    "inputs": [
+      { "name": "subject", "type": "string", "required": true }
+    ],
+    "capabilities": ["prompt:inject", "fs:write"]
+  }
+}

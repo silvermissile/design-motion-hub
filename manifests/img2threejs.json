@@ -1,0 +1,37 @@
+{
+  "$schema": "https://open-design.ai/schemas/plugin.v1.json",
+  "specVersion": "1.0.0",
+  "name": "img2threejs",
+  "title": "img2threejs",
+  "title_i18n": {
+    "zh-CN": "图片重建程序化 Three.js 模型"
+  },
+  "version": "1.2.0",
+  "description": "Reconstruct reference images into procedural Three.js TypeScript factories (THREE.Group) via 8-stage quality-gated sculpting.",
+  "description_i18n": {
+    "zh-CN": "通过 8 阶段质量门控，将参考图代码重建为程序化 Three.js TypeScript 工厂函数。"
+  },
+  "author": {
+    "name": "hoainho",
+    "url": "https://github.com/img2threejs/img2threejs"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/img2threejs/img2threejs",
+  "tags": ["3d", "threejs", "webgl", "procedural", "reconstruction"],
+  "compat": {
+    "agentSkills": [{ "path": "./SKILL.md" }]
+  },
+  "od": {
+    "kind": "skill",
+    "taskKind": "new-generation",
+    "mode": "prototype",
+    "scenario": "product",
+    "useCase": {
+      "query": "Reconstruct a procedural Three.js 3D model from {{reference}}."
+    },
+    "inputs": [
+      { "name": "reference", "type": "string", "required": true }
+    ],
+    "capabilities": ["prompt:inject", "fs:write"]
+  }
+}

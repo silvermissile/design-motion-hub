@@ -2,41 +2,108 @@
   "$schema": "https://open-design.ai/schemas/marketplace.v1.json",
   "specVersion": "1.0.0",
   "name": "design-motion-hub",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "owner": {
-    "name": "water",
-    "url": "https://github.com/nexu-io/open-design"
+    "name": "silvermissile",
+    "url": "https://github.com/silvermissile/design-motion-hub"
   },
   "metadata": {
-    "description": "Personal frontend showcase, motion recipes, and craft rules marketplace (OpenDesign + OpenMotion compatible).",
-    "version": "0.1.0"
+    "description": "Unified frontend showcase, motion recipes, WebGL shaders, diagrams, 3D, and craft marketplace for OpenDesign and OpenMotion.",
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "motion-recipes-kit",
       "title": "Motion Recipes Kit",
-      "title_i18n": {
-        "zh-CN": "零依赖动效与着色器组件库"
-      },
+      "title_i18n": { "zh-CN": "零依赖动效与着色器组件库" },
       "version": "0.1.0",
-      "source": "./packages/motion-recipes-kit",
+      "source": "github:silvermissile/design-motion-hub@main/packages/motion-recipes-kit",
       "license": "Apache-2.0",
       "capabilitiesSummary": ["prompt:inject", "fs:write"],
       "tags": ["motion", "shader", "webgl", "canvas", "animation", "html"],
-      "description": "84 dependency-free WebGL shaders, Canvas 2D fields, kinetic text, and UI micro-interactions extracted from motion-anything, with dual-clock HyperFrames support."
+      "description": "84 dependency-free WebGL shaders, Canvas 2D fields, kinetic text, and UI micro-interactions with dual-clock HyperFrames support."
     },
     {
       "name": "motion-spec-craft",
       "title": "Motion Spec Craft",
-      "title_i18n": {
-        "zh-CN": "MOTION-SPEC 定量动效品味约束"
-      },
+      "title_i18n": { "zh-CN": "MOTION-SPEC 定量动效品味约束" },
       "version": "0.1.0",
-      "source": "./packages/motion-spec-craft",
+      "source": "github:silvermissile/design-motion-hub@main/packages/motion-spec-craft",
       "license": "Apache-2.0",
       "capabilitiesSummary": ["prompt:inject"],
       "tags": ["motion", "craft", "accessibility", "restraint", "tokens"],
       "description": "Quantitative motion timing/easing tokens, per-viewport restraint budgets, avoid_when rules, and prefers-reduced-motion fallbacks."
+    },
+    {
+      "name": "svg-animations-kit",
+      "title": "SVG Animations Kit",
+      "title_i18n": { "zh-CN": "SVG 矢量与路径动效指南" },
+      "version": "0.1.0",
+      "source": "github:silvermissile/design-motion-hub@main/packages/svg-animations-kit",
+      "license": "Apache-2.0",
+      "capabilitiesSummary": ["prompt:inject", "fs:write"],
+      "tags": ["svg", "smil", "vector", "animation", "path"],
+      "description": "Handcrafted SVG SMIL/CSS animations, stroke path drawing, shape morphing, and motion paths."
+    },
+    {
+      "name": "paper-shaders",
+      "title": "Paper Shaders Adapter",
+      "title_i18n": { "zh-CN": "Paper Shaders WebGL2 着色器集" },
+      "version": "0.1.0",
+      "source": "github:silvermissile/design-motion-hub@main/adapters/paper-shaders",
+      "homepage": "https://github.com/paper-design/shaders",
+      "license": "Apache-2.0",
+      "capabilitiesSummary": ["prompt:inject", "fs:write"],
+      "tags": ["shader", "webgl2", "glsl", "background", "hyperframes"],
+      "description": "Adapter sidecar for paper-design/shaders (30 zero-dependency WebGL2 GLSL ES 3.0 shaders)."
+    },
+    {
+      "name": "lieflat-charts",
+      "title": "Lieflat Charts",
+      "title_i18n": { "zh-CN": "Lieflat Charts 数据可视化" },
+      "version": "1.2.0",
+      "source": "github:silvermissile/lieflat-charts@main",
+      "homepage": "https://github.com/silvermissile/lieflat-charts",
+      "license": "MIT",
+      "capabilitiesSummary": ["prompt:inject", "fs:write"],
+      "tags": ["data-visualization", "chart", "report", "infographic", "html"],
+      "description": "Template-driven data visualization and report generation (63 chart templates, 12 full-page report templates)."
+    },
+    {
+      "name": "lanshu-animated-architecture-diagram",
+      "title": "Lanshu Animated Architecture Diagram",
+      "title_i18n": { "zh-CN": "岚叔动态架构图" },
+      "version": "1.0.0",
+      "source": "github:cclank/lanshu-animated-architecture-diagram@main",
+      "homepage": "https://github.com/cclank/lanshu-animated-architecture-diagram",
+      "license": "MIT",
+      "capabilitiesSummary": ["prompt:inject", "fs:write"],
+      "tags": ["diagram", "architecture", "excalidraw", "gif", "animation"],
+      "description": "Generate editable Excalidraw files, PNG diagrams, and animated light-flow GIFs from JSON specs."
+    },
+    {
+      "name": "img2threejs",
+      "title": "img2threejs",
+      "title_i18n": { "zh-CN": "图片重建程序化 Three.js 模型" },
+      "version": "1.2.0",
+      "source": "github:img2threejs/img2threejs@main",
+      "homepage": "https://github.com/img2threejs/img2threejs",
+      "license": "Apache-2.0",
+      "capabilitiesSummary": ["prompt:inject", "fs:write"],
+      "tags": ["3d", "threejs", "webgl", "procedural", "reconstruction"],
+      "description": "Reconstruct reference images into procedural Three.js TypeScript factories via 8-stage quality-gated sculpting."
+    },
+    {
+      "name": "text-to-lottie",
+      "title": "Text to Lottie",
+      "title_i18n": { "zh-CN": "文本生成 Lottie 矢量动画" },
+      "version": "1.0.0",
+      "source": "github:diffusionstudio/lottie@main/skills/text-to-lottie",
+      "homepage": "https://github.com/diffusionstudio/lottie",
+      "license": "MIT",
+      "capabilitiesSummary": ["prompt:inject", "fs:write"],
+      "tags": ["lottie", "bodymovin", "vector", "animation", "svg", "json"],
+      "description": "Create, edit, or fix Lottie/Bodymovin JSON animations for UI, loaders, logos, lower thirds, and charts."
     }
   ]
 }

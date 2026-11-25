@@ -4,10 +4,10 @@
  * Supports:
  *   - github:owner/repo[@ref][/subpath]
  *   - update: "latest" (fetch & hard reset) | "pinned" (skip if present) | "local" (no-op)
- *   - optional manifestOverride injection into the synced folder
+ *   - optional manifestOverride injection into the resolved package root (supports subpath)
  */
 import { execFileSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -20,7 +20,7 @@ const dryRun = args.includes('--dry-run');
 const onlyIdx = args.indexOf('--only');
 const onlyId = onlyIdx >= 0 ? args[onlyIdx + 1] : null;
 
-function parseGithubSource(spec, defaultRef = 'main') {
+export function parseGithubSource(spec, defaultRef = 'main') {
   const raw = spec.slice('github:'.length);
   const parts = raw.split('/');
   if (parts.length < 2) throw new Error(`Invalid github source: ${spec}`);
@@ -51,12 +51,12 @@ function syncGithubRepo(spec, destDir, ref, updateMode) {
   if (existsSync(gitDir)) {
     if (updateMode === 'pinned') {
       console.log(`  [skip] pinned at ${destDir}`);
-      return;
+      return parsed;
     }
     console.log(`  [update] fetching ${parsed.url} (${parsed.ref})`);
     runGit(destDir, ['fetch', '--depth', '1', 'origin', parsed.ref]);
     runGit(destDir, ['reset', '--hard', 'FETCH_HEAD']);
-    return;
+    return parsed;
   }
 
   console.log(`  [clone] ${parsed.url} (${parsed.ref}) -> ${destDir}`);
@@ -68,6 +68,7 @@ function syncGithubRepo(spec, destDir, ref, updateMode) {
   } else {
     runGit(null, ['clone', '--depth', '1', '--branch', parsed.ref, parsed.url, destDir]);
   }
+  return parsed;
 }
 
 function main() {
@@ -89,10 +90,11 @@ function main() {
 
     if (item.kind === 'external-repo' && item.source.startsWith('github:')) {
       const dest = path.join(SYNC_ROOT, item.id);
-      syncGithubRepo(item.source, dest, item.ref, item.update || 'latest');
+      const parsed = syncGithubRepo(item.source, dest, item.ref, item.update || 'latest');
       if (item.manifestOverride) {
+        const pkgRoot = parsed.subpath ? path.join(dest, parsed.subpath) : dest;
         const srcManifest = path.resolve(ROOT, item.manifestOverride);
-        const dstManifest = path.join(dest, 'open-design.json');
+        const dstManifest = path.join(pkgRoot, 'open-design.json');
         console.log(`  [manifest] ${srcManifest} -> ${dstManifest}`);
         if (!dryRun && existsSync(srcManifest)) cpSync(srcManifest, dstManifest);
       }

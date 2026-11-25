@@ -29,11 +29,21 @@ const odPluginsDir = path.join(odDataDir, 'plugins');
 const agentSkillsDir = flagValue('--skills-dir', path.join(os.homedir(), '.agents', 'skills'));
 const openmotionDir = flagValue('--openmotion-dir', '');
 
+function githubSubpath(spec) {
+  const parts = spec.slice('github:'.length).split('/');
+  return parts.length > 2 ? parts.slice(2).join('/') : '';
+}
+
 function resolveItemDir(item) {
   if (item.source.startsWith('local:')) {
     return path.resolve(ROOT, item.source.slice('local:'.length));
   }
-  return path.join(SYNC_ROOT, item.id);
+  const base = path.join(SYNC_ROOT, item.id);
+  if (item.source.startsWith('github:')) {
+    const sub = githubSubpath(item.source);
+    return sub ? path.join(base, sub) : base;
+  }
+  return base;
 }
 
 function replaceSymlink(src, dest) {
@@ -60,7 +70,10 @@ function copyDirClean(src, dest) {
   }
   mkdirSync(path.dirname(dest), { recursive: true });
   rmSync(dest, { recursive: true, force: true });
-  cpSync(src, dest, { recursive: true });
+  cpSync(src, dest, {
+    recursive: true,
+    filter: (p) => path.basename(p) !== '.git',
+  });
 }
 
 function registerInOpenMotionCatalog(omRoot, item, srcDir) {
