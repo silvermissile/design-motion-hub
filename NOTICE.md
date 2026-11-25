@@ -6,3 +6,5 @@
    - 抽取内容：`recipes/web/_fx/shaderbg.js`（及升级双模时钟适配）、84 个零依赖 Web/Shader/Canvas/CSS 动效实现、`MOTION-SPEC.md` 定量动效规范。
 2. **react-bits** (<https://reactbits.dev>)
    - 其中 35+ 零依赖着色器与交互效果移植自 react-bits（原始着色器与效果逻辑由原作者授权 `motion-anything` 再分发，React 封装已重写为原生 JS/CSS）。
+3. **news-documentary-video-skill** (<https://github.com/SerenaMugua/news-documentary-video-skill>, `CC BY-NC-SA 4.0`)
+   - 仅以外部注册表按原许可证链接引用，不随本仓库 Apache-2.0 代码库再分发其受 `CC BY-NC-SA 4.0` 约束的文件。

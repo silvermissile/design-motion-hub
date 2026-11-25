@@ -1,0 +1,37 @@
+{
+  "$schema": "https://open-design.ai/schemas/plugin.v1.json",
+  "specVersion": "1.0.0",
+  "name": "news-documentary-video",
+  "title": "News Documentary Video",
+  "title_i18n": {
+    "zh-CN": "新闻纪实风格代码视频"
+  },
+  "version": "1.0.0",
+  "description": "End-to-end news documentary code video production workflow: fact research, 6-act in-medias-res storyboard, Wikimedia portraits, Incompetech news BGM, VAD voice mixing, vintage newspaper cutouts, charts, and audio/visual QA checklist.",
+  "description_i18n": {
+    "zh-CN": "端到端新闻纪实风格代码视频生产指南：事实调研、6 幕倒叙分镜、人物肖像与新闻配乐采集、VAD 配音混音、复古报纸剪纸与视听 QA 门禁。"
+  },
+  "author": {
+    "name": "SerenaMugua",
+    "url": "https://github.com/SerenaMugua/news-documentary-video-skill"
+  },
+  "license": "CC-BY-NC-SA-4.0",
+  "homepage": "https://github.com/SerenaMugua/news-documentary-video-skill",
+  "tags": ["news", "documentary", "video", "storyboard", "journalism", "charts", "audio-qa"],
+  "compat": {
+    "agentSkills": [{ "path": "./SKILL.md" }]
+  },
+  "od": {
+    "kind": "skill",
+    "taskKind": "new-generation",
+    "mode": "prototype",
+    "scenario": "product",
+    "useCase": {
+      "query": "Produce a news-documentary style explainer or visual brief for {{topic}}."
+    },
+    "inputs": [
+      { "name": "topic", "type": "string", "required": true }
+    ],
+    "capabilities": ["prompt:inject", "fs:write"]
+  }
+}

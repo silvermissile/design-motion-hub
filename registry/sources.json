@@ -69,6 +69,15 @@
       "manifestOverride": "./manifests/text-to-lottie.json",
       "targets": ["opendesign-plugin", "agent-skill"],
       "description": "文本/SVG 生成与修复 Lottie/Bodymovin JSON 矢量动画"
+    },
+    {
+      "id": "news-documentary-video",
+      "kind": "external-repo",
+      "source": "github:SerenaMugua/news-documentary-video-skill@main/skills/news-documentary-video",
+      "update": "latest",
+      "manifestOverride": "./manifests/news-documentary-video.json",
+      "targets": ["opendesign-plugin", "agent-skill"],
+      "description": "新闻纪实风格代码视频生产指南（6 幕倒叙、A/B-roll 采集、VAD 混音与视听 QA 门禁；CC BY-NC-SA 4.0）"
     }
   ]
 }

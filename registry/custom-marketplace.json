@@ -104,6 +104,18 @@
       "capabilitiesSummary": ["prompt:inject", "fs:write"],
       "tags": ["lottie", "bodymovin", "vector", "animation", "svg", "json"],
       "description": "Create, edit, or fix Lottie/Bodymovin JSON animations for UI, loaders, logos, lower thirds, and charts."
+    },
+    {
+      "name": "news-documentary-video",
+      "title": "News Documentary Video",
+      "title_i18n": { "zh-CN": "新闻纪实风格代码视频" },
+      "version": "1.0.0",
+      "source": "github:SerenaMugua/news-documentary-video-skill@main/skills/news-documentary-video",
+      "homepage": "https://github.com/SerenaMugua/news-documentary-video-skill",
+      "license": "CC-BY-NC-SA-4.0",
+      "capabilitiesSummary": ["prompt:inject", "fs:write"],
+      "tags": ["news", "documentary", "video", "storyboard", "journalism", "charts", "audio-qa"],
+      "description": "End-to-end news documentary code video production workflow with A/B-roll, vintage newspaper cutouts, VAD audio mixing, charts, and QA checklist."
     }
   ]
 }

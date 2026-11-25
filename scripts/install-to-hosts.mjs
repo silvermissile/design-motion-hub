@@ -24,6 +24,7 @@ const OPENMOTION_SCENARIO_BY_ID = {
   'lanshu-animated-architecture-diagram': 'document',
   img2threejs: 'webgl',
   'text-to-lottie': 'prototype',
+  'news-documentary-video': 'prototype',
 };
 
 const args = process.argv.slice(2);
